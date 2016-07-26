@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>VHS Movie Collection</title>
+	<script src="https://code.jquery.com/jquery-3.1.0.js"   integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="   crossorigin="anonymous"></script>
+	<style>
+		#movie_box{
+			width: 800px;
+			height: auto;
+			border: 15px solid black;
+			border-radius: 5px;
+			margin: 0 auto 0 auto;
+			text-align: center;
+
+
+		}
+
+
+		#movie_list{
+			color:;
+}
+
+
+
+
+
+	</style>	
+</head>
+<body>
+
+<div id="movie_box">
+
+	<h1>VHS Movie Store!</h1><br>
+	<div id= "movie_list"> 
+ 
+
+
+</div>
+
+
+
+</div><br>
+
+<script>
+$.get("http://159.203.175.239:8080/checkouts.txt", function(movieData){
+	$.get("http://159.203.175.239:8080/movies.txt", function(movieTitles){
+		function makeObject(data){
+			var userData = [];
+			var monthsData = [];
+			var moviesData = [];
+			data = data.split("\n");
+
+			for(var i = 0; i < data.length; i++){
+				userData.push(data[i].split(" ")[0]);
+				monthsData.push(data[i].split(" ")[1]);
+				moviesData.push(data[i].split(" ")[2]);
+			}
+			return {
+				userID: userData,
+				month: monthsData,
+				movieId: moviesData,
+			}
+			
+		}
+
+		var dataObj = makeObject(movieData);
+		console.log(dataObj);
+
+		function findMode(arr) {
+
+			var counts = {};
+
+			for (var i = 0; i < arr.length; i++) {
+				var current = arr[i];
+				if (counts[current] === undefined) {
+					counts[current] = 1;
+				} else {
+					counts[current] ++;
+				}
+			}
+
+			
+			var maxcount = -Infinity;
+			var maxkey = 0;
+			for (var key in counts){
+				if (counts[key] > maxcount) {
+					maxcount = counts[key];
+					maxkey = key;
+				}else if(counts[key] == maxcount){
+					maxcount = counts[key];
+					maxkey = key + " & " + maxkey;
+				}
+			}
+			return maxkey;
+			// look at each element of the array
+			// increment the count of whatever that element is
+			// find the maximum of those counts
+		}
+
+
+		var usertest = findMode(dataObj.userID);
+
+		var monthtest =  findMode(dataObj.month);
+		var movietest =  findMode(dataObj.movieId);
+
+		console.log(usertest);
+		console.log(monthtest);
+		console.log(movietest);
+
+
+		function findMovieTitle(movieId){
+			console.log(movieTitles);
+			movieTitles = movieTitles.split("\n");
+			for (var i = 0; i < movieId.length; i++){
+				
+			}
+
+			console.log(movieTitles);
+			var movieName;
+
+
+
+
+
+
+
+			return movieName;
+		}
+
+
+
+		findMovieTitle()
+
+	}); // ending the AJAX request for movie titles : do not delete.
+});//ending the AJAX request: do not delete. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
